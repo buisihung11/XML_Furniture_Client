@@ -30,34 +30,11 @@ public class Spider {
 //        Document docCategories = spider
 //                .splitSrcToDOM("<ul class=\"nav navbar-nav ml-navbar-nav ml-navbar-menu\"");
 
-        Document docCategories = XMLUtils.parseFileToDom("test.html");
-        XPath xPath = XMLUtils.createXPath();
-
-        NodeList categoriesNodeList = (NodeList) xPath
-                .evaluate(Constants.ONEKINGLAND_CATEGORIES_CONTAINER_XPATH + "/a",
-                        docCategories,
-                        XPathConstants.NODESET);
-
-        for (int i = 0; i < categoriesNodeList.getLength(); i++) {
-            // xu ly tung 
-            Node parentCategory = categoriesNodeList.item(i);
-            String nodeValue = parentCategory.getTextContent().replaceAll("\n+", "").trim();
-            String id = parentCategory.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
-            System.out.println("Category-" + id + ": " + nodeValue);
-            if (!id.isEmpty()) {
-                String subXpath = String.format("%s[@id=\"%s\"]/ul/li/a",
-                        Constants.ONEKINGLAND_CATEGORIES_CONTAINER_XPATH, id);
-                NodeList subCategoriesNodeList = (NodeList) xPath
-                        .evaluate(subXpath, docCategories, XPathConstants.NODESET);
-                for (int j = 0; j < subCategoriesNodeList.getLength(); j++) {
-                    Node subNode = subCategoriesNodeList.item(j);
-                    String subValue = subNode.getTextContent().replaceAll("\n+", "").trim();
-                    String subId = subNode.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
-                    System.out.println("\tSub-Category-" + subId + ": " + subValue);
-                }
-
-            }
-        }
+        String categoriesHTMLSrc = spider.splitSrc("<ul class=\"nav navbar-nav ml-navbar-nav ml-navbar-menu\"");
+        String categoriesXSLTPath = "web\\WEB-INF\\" + "categories.xsl";
+        String categoriesXMLSrc = new XSLTApllier()
+                .applyStylesheet(categoriesXSLTPath, categoriesHTMLSrc);
+        FileUtil.saveSrcToFile("CategoriesXML.xml", categoriesXMLSrc);
     }
 
     public String name;
@@ -90,6 +67,11 @@ public class Spider {
     public void saveToFile(String filePath, String[] containerTag, String[] beforeEndTag) throws IOException {
         String splitted = XMLUtils.splitSection(src, containerTag, beforeEndTag);
         FileUtil.saveSrcToFile(filePath, splitted);
+    }
+
+    public String splitSrc(String containerTag) throws IOException,
+            ParserConfigurationException, SAXException {
+        return XMLUtils.splitSection(src, containerTag);
     }
 
     public Document splitSrcToDOM(String containerTag) throws IOException,
