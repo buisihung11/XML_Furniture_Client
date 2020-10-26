@@ -85,6 +85,14 @@ public class XMLUtils {
         return doc;
     }
 
+    public static Document parseFileToDom(String filePath) throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        File f = new File(filePath);
+        Document doc = db.parse(f);
+        return doc;
+    }
+
     public static String splitSection(String src, String containerTag) throws MalformedURLException, IOException {
         String content = "";
         try {
@@ -101,7 +109,7 @@ public class XMLUtils {
                 if (inputLine.contains(containerTag)) {
                     isFound = true;
                 }
-                
+
 //                System.out.println("Inputline:  " + inputLine);
                 String temp = inputLine.trim();
                 temp = temp.replaceAll("</", "\n</")

@@ -26,25 +26,36 @@ public class Spider {
         Spider spider = new Spider("OneKingLane", url);
         spider.startExecution();
 //        spider.saveToFile("test-1.html");
-//        spider.saveToFile("test.html", "<div class=\"tab-pane nav-active Nav-100002\"");
-        Document docCategories = spider
-                .splitSrcToDOM("<ul class=\"nav navbar-nav ml-navbar-nav ml-navbar-menu\"");
+//        spider.saveToFile("test.html", "<ul class=\"nav navbar-nav ml-navbar-nav ml-navbar-menu\"");
+//        Document docCategories = spider
+//                .splitSrcToDOM("<ul class=\"nav navbar-nav ml-navbar-nav ml-navbar-menu\"");
 
+        Document docCategories = XMLUtils.parseFileToDom("test.html");
         XPath xPath = XMLUtils.createXPath();
 
         NodeList categoriesNodeList = (NodeList) xPath
-                .evaluate(Constants.ONEKINGLAND_CATEGORIES_CONTAINER_XPATH,
+                .evaluate(Constants.ONEKINGLAND_CATEGORIES_CONTAINER_XPATH + "/a",
                         docCategories,
                         XPathConstants.NODESET);
-        for (int i = 0; i < categoriesNodeList.getLength(); i++) {
-            Node parentCategory = categoriesNodeList.item(i);
-            String parentValue = parentCategory.getNodeValue();
 
-            // Check category name is exist
-            String categoryName = categoriesNodeList.item(i).getTextContent().replaceAll("\n+", "").trim();
-            if (!categoryName.equals("")) {
-                System.out.println("Category " + i + ":  " + categoryName);
-                System.out.println("Parent's Sibling: " + parentCategory.getNextSibling().getLocalName().toString());
+        for (int i = 0; i < categoriesNodeList.getLength(); i++) {
+            // xu ly tung 
+            Node parentCategory = categoriesNodeList.item(i);
+            String nodeValue = parentCategory.getTextContent().replaceAll("\n+", "").trim();
+            String id = parentCategory.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
+            System.out.println("Category-" + id + ": " + nodeValue);
+            if (!id.isEmpty()) {
+                String subXpath = String.format("%s[@id=\"%s\"]/ul/li/a",
+                        Constants.ONEKINGLAND_CATEGORIES_CONTAINER_XPATH, id);
+                NodeList subCategoriesNodeList = (NodeList) xPath
+                        .evaluate(subXpath, docCategories, XPathConstants.NODESET);
+                for (int j = 0; j < subCategoriesNodeList.getLength(); j++) {
+                    Node subNode = subCategoriesNodeList.item(j);
+                    String subValue = subNode.getTextContent().replaceAll("\n+", "").trim();
+                    String subId = subNode.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
+                    System.out.println("\tSub-Category-" + subId + ": " + subValue);
+                }
+
             }
         }
     }
@@ -72,6 +83,7 @@ public class Spider {
 
     public void saveToFile(String filePath, String containerTag) throws IOException {
         String splitted = XMLUtils.splitSection(src, containerTag);
+        splitted = "<html>\n<head>\nHeader</head>\n<body>\n" + splitted + "\n</body>\n</html>";
         FileUtil.saveSrcToFile(filePath, splitted);
     }
 
@@ -84,8 +96,10 @@ public class Spider {
             ParserConfigurationException, SAXException {
         String splitedSrc = XMLUtils.splitSection(src, containerTag);
         System.out.println("SPLITED: ");
+        splitedSrc = "<html><head></head><body>" + splitedSrc + "</body></html>";
         return XMLUtils.parseStringToDom(splitedSrc);
     }
+
 //
 //    public XMLEventReader splitSrcToXML(String containerTag) throws IOException,
 //            FileNotFoundException, UnsupportedEncodingException, XMLStreamException {
@@ -102,5 +116,4 @@ public class Spider {
 //        System.out.println(splitedSrc);
 //        return XMLUtils.parseStringToXMLEvent(splitedSrc);
 //    }
-
 }
