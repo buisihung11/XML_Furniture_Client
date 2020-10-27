@@ -30,7 +30,7 @@
                                 <xsl:value-of select="a" />
                             </name>
                             <url>
-                                <xsl:value-of select="a/@href" />
+                                <xsl:value-of select="concat('https://www.onekingslane.com/',a/@href)" />
                             </url>
                         </subcategory>
                     </xsl:for-each>

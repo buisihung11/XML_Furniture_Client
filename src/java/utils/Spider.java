@@ -34,99 +34,6 @@ public class Spider {
 
     private static String dtdPath = "";
 
-    private static CategoryDAO cateDAO = new CategoryDAO();
-
-    public static void main(String[] args) throws Exception {
-        String url = "https://www.onekingslane.com/home.do";
-        Spider spider = new Spider("OneKingLane", url);
-        spider.startExecution();
-//        spider.saveToFile("test-1.html");
-//        spider.saveToFile("test.html", "<ul class=\"nav navbar-nav ml-navbar-nav ml-navbar-menu\"");
-//        Document docCategories = spider
-//                .splitSrcToDOM("<ul class=\"nav navbar-nav ml-navbar-nav ml-navbar-menu\"");
-
-        String categoriesHTMLSrc = spider.splitSrc("<ul class=\"nav navbar-nav ml-navbar-nav ml-navbar-menu\"");
-        String categoriesXSLTPath = "web\\WEB-INF\\" + "categories.xsl";
-        String categoriesXMLSrc = new XSLTApllier()
-                .applyStylesheet(categoriesXSLTPath, categoriesHTMLSrc);
-
-        // validate
-//        boolean isValid = XMLUtils.validateXMLSchema(dtdPath,c categoriesXMLSrc);
-        // Unmarshall XML source and validate via Schema to get object
-//        JAXBContext jaxb = JAXBContext.newInstance(ListCategories.class);
-//        Unmarshaller unmarshaller = jaxb.createUnmarshaller();
-//        ListCategories product = (ListCategories) unmarshaller.unmarshal(new ByteArrayInputStream(categoriesXMLSrc.getBytes(StandardCharsets.UTF_8)));
-        Document categoriesDom = XMLUtils.parseStringToDom(categoriesXMLSrc);
-        NodeList categoriesNodeList = categoriesDom.getElementsByTagName("Category");
-        ArrayList<Category> categories = new ArrayList<>();
-        for (int i = 0; i < categoriesNodeList.getLength(); i++) {
-            Node cateNode = categoriesNodeList.item(i);
-            Category category = getCategory(cateNode);
-            if (category != null) {
-                categories.add(category);
-            }
-        }
-
-        categories.forEach((category) -> {
-            System.out.println("CategoryName: " + category.getName());
-            cateDAO.insertCategory(category);
-            for (SubCategory subCategory : category.getSubcategory()) {
-                System.out.println("\tSub-Name: " + subCategory.getName());
-            }
-        });
-    }
-
-    public static Category getCategory(Node cateNode) {
-        NodeList cateNodeChildList = cateNode.getChildNodes();
-        Category cate = new Category();
-        for (int j = 0; j < cateNodeChildList.getLength(); j++) {
-
-            Node cateEle = cateNodeChildList.item(j);
-            if (cateEle instanceof Element) {
-                String eleName = ((Element) cateEle).getTagName();
-                if (eleName.equals("name")) {
-                    cate.setName(cateEle.getTextContent());
-                } else if (eleName.equals("url")) {
-                    cate.setUrl(cateEle.getTextContent());
-                }
-
-            }
-        }
-
-        // tim subCate
-        NodeList subNodeList = ((Element) cateNode).getElementsByTagName("subcategory");
-        ArrayList<SubCategory> subCategories = new ArrayList<>();
-        for (int j = 0; j < subNodeList.getLength(); j++) {
-            Node subCateNode = subNodeList.item(j);
-            SubCategory subCate = getSubCategory(subCateNode);
-            if (subCate != null) {
-                subCategories.add(subCate);
-            }
-        }
-        if (!subCategories.isEmpty()) {
-            cate.setSubcategory(subCategories);
-        }
-        return cate;
-    }
-
-    public static SubCategory getSubCategory(Node subNode) {
-        NodeList subCateNodeChildList = subNode.getChildNodes();
-        SubCategory sub = new SubCategory();
-        for (int j = 0; j < subCateNodeChildList.getLength(); j++) {
-            Node cateEle = subCateNodeChildList.item(j);
-            if (cateEle instanceof Element) {
-                String eleName = ((Element) cateEle).getTagName();
-                if (eleName.equals("name")) {
-                    sub.setName(cateEle.getTextContent());
-                } else if (eleName.equals("url")) {
-                    sub.setUrl(cateEle.getTextContent());
-                }
-
-            }
-        }
-        return sub;
-    }
-
     public String name;
     public String startURL;
     public String src;
@@ -162,6 +69,12 @@ public class Spider {
     public String splitSrc(String containerTag) throws IOException,
             ParserConfigurationException, SAXException {
         return XMLUtils.splitSection(src, containerTag);
+    }
+
+    public String splitSrcFromFile(String filePath, String containerTag) throws IOException,
+            ParserConfigurationException, SAXException {
+        String srcFromFile = FileUtil.getSrcFromFile(filePath);
+        return XMLUtils.splitSection(srcFromFile, containerTag);
     }
 
     public Document splitSrcToDOM(String containerTag) throws IOException,
