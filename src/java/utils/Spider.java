@@ -6,13 +6,24 @@
 package utils;
 
 import config.Constants;
+import daos.CategoryDAO;
+import dtos.Category;
+import dtos.ListCategories;
+import dtos.SubCategory;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import org.xml.sax.SAXException;
 
 /**
@@ -20,6 +31,10 @@ import org.xml.sax.SAXException;
  * @author Admin
  */
 public class Spider {
+
+    private static String dtdPath = "";
+
+    private static CategoryDAO cateDAO = new CategoryDAO();
 
     public static void main(String[] args) throws Exception {
         String url = "https://www.onekingslane.com/home.do";
@@ -34,7 +49,82 @@ public class Spider {
         String categoriesXSLTPath = "web\\WEB-INF\\" + "categories.xsl";
         String categoriesXMLSrc = new XSLTApllier()
                 .applyStylesheet(categoriesXSLTPath, categoriesHTMLSrc);
-        FileUtil.saveSrcToFile("CategoriesXML.xml", categoriesXMLSrc);
+
+        // validate
+//        boolean isValid = XMLUtils.validateXMLSchema(dtdPath,c categoriesXMLSrc);
+        // Unmarshall XML source and validate via Schema to get object
+//        JAXBContext jaxb = JAXBContext.newInstance(ListCategories.class);
+//        Unmarshaller unmarshaller = jaxb.createUnmarshaller();
+//        ListCategories product = (ListCategories) unmarshaller.unmarshal(new ByteArrayInputStream(categoriesXMLSrc.getBytes(StandardCharsets.UTF_8)));
+        Document categoriesDom = XMLUtils.parseStringToDom(categoriesXMLSrc);
+        NodeList categoriesNodeList = categoriesDom.getElementsByTagName("Category");
+        ArrayList<Category> categories = new ArrayList<>();
+        for (int i = 0; i < categoriesNodeList.getLength(); i++) {
+            Node cateNode = categoriesNodeList.item(i);
+            Category category = getCategory(cateNode);
+            if (category != null) {
+                categories.add(category);
+            }
+        }
+
+        categories.forEach((category) -> {
+            System.out.println("CategoryName: " + category.getName());
+            cateDAO.insertCategory(category);
+            for (SubCategory subCategory : category.getSubcategory()) {
+                System.out.println("\tSub-Name: " + subCategory.getName());
+            }
+        });
+    }
+
+    public static Category getCategory(Node cateNode) {
+        NodeList cateNodeChildList = cateNode.getChildNodes();
+        Category cate = new Category();
+        for (int j = 0; j < cateNodeChildList.getLength(); j++) {
+
+            Node cateEle = cateNodeChildList.item(j);
+            if (cateEle instanceof Element) {
+                String eleName = ((Element) cateEle).getTagName();
+                if (eleName.equals("name")) {
+                    cate.setName(cateEle.getTextContent());
+                } else if (eleName.equals("url")) {
+                    cate.setUrl(cateEle.getTextContent());
+                }
+
+            }
+        }
+
+        // tim subCate
+        NodeList subNodeList = ((Element) cateNode).getElementsByTagName("subcategory");
+        ArrayList<SubCategory> subCategories = new ArrayList<>();
+        for (int j = 0; j < subNodeList.getLength(); j++) {
+            Node subCateNode = subNodeList.item(j);
+            SubCategory subCate = getSubCategory(subCateNode);
+            if (subCate != null) {
+                subCategories.add(subCate);
+            }
+        }
+        if (!subCategories.isEmpty()) {
+            cate.setSubcategory(subCategories);
+        }
+        return cate;
+    }
+
+    public static SubCategory getSubCategory(Node subNode) {
+        NodeList subCateNodeChildList = subNode.getChildNodes();
+        SubCategory sub = new SubCategory();
+        for (int j = 0; j < subCateNodeChildList.getLength(); j++) {
+            Node cateEle = subCateNodeChildList.item(j);
+            if (cateEle instanceof Element) {
+                String eleName = ((Element) cateEle).getTagName();
+                if (eleName.equals("name")) {
+                    sub.setName(cateEle.getTextContent());
+                } else if (eleName.equals("url")) {
+                    sub.setUrl(cateEle.getTextContent());
+                }
+
+            }
+        }
+        return sub;
     }
 
     public String name;

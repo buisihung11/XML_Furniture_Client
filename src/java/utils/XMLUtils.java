@@ -34,6 +34,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.validation.Validator;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -45,6 +47,9 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
@@ -56,12 +61,12 @@ import org.xml.sax.SAXException;
  * @author Admin
  */
 public class XMLUtils {
-
+    
     public static void main(String[] args) throws Exception {
         String url = "https://www.onekingslane.com/home.do";
         Spider spider = new Spider("OneKingLane", url);
         spider.startExecution();
-
+        
         spider.saveToFile("test-1.html");
         spider.saveToFile("test.html", "<div class=\"tab-pane nav-active Nav-100002\"");
 //        Document docCategories = spider
@@ -69,22 +74,44 @@ public class XMLUtils {
 
         XPath xPath = XMLUtils.createXPath();
     }
-
+    
     public static XPath createXPath() throws Exception {
         XPathFactory xpf = XPathFactory.newInstance();
         XPath xPath = xpf.newXPath();
         return xPath;
     }
-
+    
+    public static boolean validateXMLSchema(String xsdPath, String xmlSrc) {
+        try {
+            SchemaFactory factory
+                    = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = factory.newSchema(new File(xsdPath));
+            
+            javax.xml.validation.Validator validator = schema.newValidator();
+            validator.validate(new SAXSource(new InputSource(new StringReader(xmlSrc))));
+        } catch (IOException e) {
+            System.out.println("Exception: " + e.getMessage());
+            return false;
+        } catch (SAXException e1) {
+            System.out.println("SAX Exception: " + e1.getMessage());
+            return false;
+        }
+        
+        return true;
+        
+    }
+    
     public static Document parseStringToDom(String src) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setValidating(false);
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(src));
+//        is.setEncoding("UTF-8");
         Document doc = db.parse(is);
         return doc;
     }
-
+    
     public static Document parseFileToDom(String filePath) throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -92,7 +119,7 @@ public class XMLUtils {
         Document doc = db.parse(f);
         return doc;
     }
-
+    
     public static String splitSection(String src, String containerTag) throws MalformedURLException, IOException {
         String content = "";
         try {
@@ -133,20 +160,20 @@ public class XMLUtils {
                         }
                     }
                 }
-
+                
                 if (isFound) {
-
+                    
                     content += temp;
                 }
             } while ((inputLine) != null || !stack.isEmpty());
             bf.close();
         } catch (FileNotFoundException ex) {
         } finally {
-
+            
         }
         return content;
     }
-
+    
     public static String splitSection(String src, String[] containerTag, String[] beforeEndTag) throws UnsupportedEncodingException, IOException {
         String content = "";
         String startContainerTag = containerTag[0];
@@ -161,7 +188,7 @@ public class XMLUtils {
             boolean isStartEnd = false;
             boolean isDivEnd = false;
             while ((inputLine = bf.readLine()) != null) {
-
+                
                 if (inputLine.contains(startContainerTag)) {
                     isFound = true;
                 }
@@ -184,17 +211,17 @@ public class XMLUtils {
             bf.close();
         } catch (FileNotFoundException ex) {
         } finally {
-
+            
         }
         return content;
     }
-
+    
     public static XMLEventReader parseFileToXMLEvent(String filePath) throws FileNotFoundException, XMLStreamException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLEventReader reader = factory.createXMLEventReader(new FileInputStream(filePath));
         return reader;
     }
-
+    
     public static XMLEventReader parseStringToXMLEvent(String xml) throws FileNotFoundException, XMLStreamException, UnsupportedEncodingException {
         byte[] byteArray = xml.getBytes("UTF-8");
         ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
@@ -203,7 +230,7 @@ public class XMLUtils {
         XMLEventReader reader = inputFactory.createXMLEventReader(inputStream);
         return reader;
     }
-
+    
     public static XMLEventReader remakeFile(String filePath, int startRow,
             int posClose, int endRow, int posOpen) {
         List<String> lines = new ArrayList<String>();
@@ -253,7 +280,7 @@ public class XMLUtils {
         }
         return null;
     }
-
+    
     private static String removeErrorTagWithPosClose(String line, int posClose) {
         int posOpen = 0;
         --posClose;
@@ -270,7 +297,7 @@ public class XMLUtils {
         line = line.substring(0, posOpen);
         return line;
     }
-
+    
     private static String remmoveErrorTagWithPosOpen(String line, int posOpen) {
         int posClose = 0;
 
@@ -286,7 +313,7 @@ public class XMLUtils {
         line = line.substring(posClose + 1);
         return line;
     }
-
+    
     public static void printAllData(Iterator<XMLEvent> iterator) {
         String result = "";
         while (iterator.hasNext()) {
@@ -316,13 +343,13 @@ public class XMLUtils {
             result = "";
         }
     }
-
+    
     public static LinkedList<XMLEvent> removeListFrom(LinkedList<XMLEvent> lEvents, Integer from) {
         int to = lEvents.size();
         for (int i = from; i < to; i++) {
             lEvents.removeLast();
         }
         return lEvents;
-
+        
     }
 }

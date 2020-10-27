@@ -1,0 +1,274 @@
+<categories xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xmlns='http://xml.netbeans.org/schema/categories'
+            xsi:schemaLocation='http://xml.netbeans.org/schema/categories categories.xsd'>
+    <category>
+        <name>
+            New Arrivals
+        </name>
+        <url>/c/furniture.do?c=119587&amp;amp;pp=99&amp;amp;sortby=newArrivalsDescend&amp;amp;newitem=true&amp;amp;sortType=1&amp;amp;nType=1</url>
+    </category>
+    <category>
+        <name>
+            Living Room
+        </name>
+        <url>/c/furniture/living-room.do?c=119587.119588&amp;amp;pp=99&amp;amp;sortby=ourPicksAscend&amp;amp;sortType=1&amp;amp;nType=1</url>
+        <subcategory>
+            <name>
+                Sofas &amp;amp;amp; Settees
+            </name>
+            <url>/c/furniture/living-room/sofas-settees.do?c=119587.119588.119604&amp;amp;pp=99&amp;amp;sortby=ourPicksAscend&amp;amp;sortType=1&amp;amp;nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Sectionals
+            </name>
+            <url>/c/furniture/living-room/sectionals.do?c=119587.119588.119605&amp;amp;pp=99&amp;amp;sortby=ourPicksAscend&amp;amp;sortType=1&amp;amp;nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Chaise Lounges &amp;amp;amp; Daybeds
+            </name>
+            <url>/c/furniture/living-room/chaise-lounges-daybeds.do?c=119587.119588.119606&amp;amp;pp=99&amp;amp;sortby=ourPicksAscend&amp;amp;sortType=1&amp;amp;nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Chairs
+            </name>
+            <url>/c/furniture/living-room/chairs.do?c=119587.119588.119607&amp;amp;pp=99&amp;amp;sortby=ourPicksAscend&amp;amp;sortType=1&amp;amp;nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Side Tables
+            </name>
+            <url>/c/furniture/living-room/side-tables.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Coffee Tables
+            </name>
+            <url>/c/furniture/living-room/coffee-tables.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Console Tables
+            </name>
+            <url>/c/furniture/living-room/console-tables.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Sideboards &amp;amp;amp; Media Storage
+            </name>
+            <url>/c/furniture/living-room/sideboards-media-storage.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Bookcases &amp;amp;amp; &amp;Eacute;tag&amp;egrave;res
+            </name>
+            <url>/c/furniture/living-room/bookcases-etageres.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Cabinets &amp;amp;amp; Hutches
+            </name>
+            <url>/c/furniture/living-room/cabinets-hutches.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Benches
+            </name>
+            <url>/c/furniture/living-room/benches.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Ottomans, Poufs &amp;amp;amp; Stools
+            </name>
+            <url>/c/furniture/living-room/ottomans-poufs-stools.do?c=119587.119588.119615&amp;amp;pp=99&amp;amp;sortby=bestSellersAscend&amp;amp;sortType=1&amp;amp;nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Room Screens
+            </name>
+            <url>/c/furniture/living-room/room-screens.do?nType=1</url>
+        </subcategory>
+    </category>
+    <category>
+        <name>
+            Office
+        </name>
+        <url>/c/furniture/office.do?nType=1</url>
+        <subcategory>
+            <name>
+                Desks
+            </name>
+            <url>/c/furniture/office/desks.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Desk Chairs
+            </name>
+            <url>/c/furniture/office/desk-chairs.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Bookcases &amp;amp;amp; &amp;Eacute;tag&amp;egrave;res
+            </name>
+            <url>/c/furniture/office/bookcases-etageres.do?nType=1</url>
+        </subcategory>
+    </category>
+    <category>
+        <name>
+            Bedroom
+        </name>
+        <url>/c/furniture/bedroom.do?nType=1</url>
+        <subcategory>
+            <name>
+                Beds
+            </name>
+            <url>/c/furniture/bedroom/beds.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Headboards
+            </name>
+            <url>/c/furniture/bedroom/headboards.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Nightstands
+            </name>
+            <url>/c/furniture/bedroom/nightstands.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Dressers &amp;amp;amp; Armoires
+            </name>
+            <url>/c/furniture/bedroom/dressers-armoire.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Vanities &amp;amp;amp; Vanity Stools
+            </name>
+            <url>/c/furniture/bedroom/vanities-vanity-stools.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Canopies &amp;amp;amp; Bed Curtains
+            </name>
+            <url>/c/furniture/bedroom/canopies-bed-curtains.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                End of Bed
+            </name>
+            <url>/c/furniture/bedroom/end-of-bed.do?nType=1</url>
+        </subcategory>
+    </category>
+    <category>
+        <name>
+            Dining Room
+        </name>
+        <url>/c/furniture/dining-room.do?nType=1</url>
+        <subcategory>
+            <name>
+                Dining Tables
+            </name>
+            <url>/c/furniture/dining-room/dining-tables.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Dining Chairs
+            </name>
+            <url>/c/furniture/dining-room/dining-chairs.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Barstools &amp;amp;amp; Counter Stools
+            </name>
+            <url>/c/furniture/dining-room/bar-stools.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Buffets &amp;amp;amp; Sideboards
+            </name>
+            <url>/c/furniture/dining-room/buffets-sideboards.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Benches &amp;amp;amp; Banquettes
+            </name>
+            <url>/c/furniture/dining-room/benches-banquettes.do?c=119587.119600.119625&amp;amp;pp=99&amp;amp;sortby=ourPicksAscend&amp;amp;sortType=1&amp;amp;nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Bar Carts &amp;amp;amp; Cabinets
+            </name>
+            <url>/c/furniture/dining-room/bar-carts.do?nType=1</url>
+        </subcategory>
+    </category>
+    <category>
+        <name>
+            Entry
+        </name>
+        <url>/c/furniture/entry.do?nType=1</url>
+        <subcategory>
+            <name>
+                Storage Furniture &amp;amp;amp; Benches
+            </name>
+            <url>/c/furniture/entry/storage-furniture-benches.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Consoles &amp;amp;amp; Center Tables
+            </name>
+            <url>/c/furniture/entry/consoles-center-tables.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Coat Racks &amp;amp;amp; Umbrella Stands
+            </name>
+            <url>/c/furniture/entry/coat-racks-umbrella-stands.do?nType=1</url>
+        </subcategory>
+        <subcategory>
+            <name>
+                Pedestals &amp;amp;amp; Plant Stands
+            </name>
+            <url>/c/furniture/entry/pedestals-plant-stands.do?nType=1</url>
+        </subcategory>
+    </category>
+    <category>
+        <name>
+            Outdoor Furniture
+        </name>
+        <url>/c/furniture/outdoor-furniture.do?nType=1</url>
+    </category>
+    <category>
+        <name>
+            Best Sellers
+        </name>
+        <url>/c/furniture.do?nType=1</url>
+    </category>
+    <category>
+        <name>
+            Design Your Own
+        </name>
+        <url>/c/code/120789.do?nType=1</url>
+    </category>
+    <category>
+        <name>
+            Shop All
+        </name>
+        <url>/c/furniture.do?nType=1</url>
+    </category>
+    <category>
+        <name>
+            Sale
+        </name>
+        <url>/c/furniture.do?c=119587&amp;amp;skuOnSale=true&amp;amp;pp=99&amp;amp;sortby=bestSellersAscend&amp;amp;cx=0&amp;amp;nType=1</url>
+    </category>
+    <category>
+        <name>
+            Vintage Furniture
+        </name>
+        <url>/c/vintage/vintage-all/vintage-furniture.do?nType=1</url>
+    </category>
+</categories>

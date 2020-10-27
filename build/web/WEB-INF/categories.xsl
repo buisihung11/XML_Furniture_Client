@@ -11,12 +11,12 @@
 
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-    <xsl:output method="html"/>
+    <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
     <xsl:template match="/">
         <categories>
             <xsl:for-each select="//li[@id='120928']/ul/li[string(@id)]">
                 <xsl:variable name="parentId" select="@id"/>
-                <category>
+                <Category>
                     <name>
                         <xsl:value-of select="a" />
                     </name>
@@ -34,7 +34,7 @@
                             </url>
                         </subcategory>
                     </xsl:for-each>
-                </category>
+                </Category>
             </xsl:for-each>
         </categories>
     </xsl:template>

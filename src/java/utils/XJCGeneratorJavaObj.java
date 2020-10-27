@@ -20,8 +20,12 @@ import org.xml.sax.SAXParseException;
  */
 public class XJCGeneratorJavaObj {
 
+    public static void main(String[] args) {
+        convertToJavaClass("web/WEB-INF/categories.xsd");
+    }
+
     public static String JAVA_CLASS_OUTPUT = "src/java/";
-    public static String PACKAGE_NAME = "com.dto";
+    public static String PACKAGE_NAME = "dtos";
 
     public static void convertToJavaClass(String fileInputPath) {
         try {
@@ -65,7 +69,4 @@ public class XJCGeneratorJavaObj {
         }
     }
 
-    public static void main(String[] args) {
-
-    }
 }

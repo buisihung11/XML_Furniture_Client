@@ -34,7 +34,7 @@ public class Internet {
             InputStream is = yc.getInputStream();
 
             String line;
-            BufferedReader bufferReader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            BufferedReader bufferReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             while ((line = bufferReader.readLine()) != null) {
                 if (!line.trim().equals("")) {
                     stringBuilder.append(line).append("\n");

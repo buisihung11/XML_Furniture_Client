@@ -1,44 +1,25 @@
-<?xml version="1.0"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
 <xs:schema version="1.0"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://xml.netbeans.org/schema/categories"
+           xmlns="http://xml.netbeans.org/schema/categories"
            elementFormDefault="qualified">
-    
-    <xs:complexType name="subcategorytype">
+    <xs:complexType name="SubCategory">
         <xs:sequence>
-            <xs:element name="name" type="stringtype"/>
-            <xs:element name="url" type="stringtype" />
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="url" type="xs:string" />
         </xs:sequence>
     </xs:complexType>
-   
-    <xs:complexType name="categorytype">
+    <xs:complexType name="Category">
         <xs:sequence>
-            <xs:element name="name" type="stringtype"/>
-            <xs:element name="url" type="stringtype" />
-            <xs:element name="subcategory" maxOccurs="unbounded" type="subcategorytype"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="url" type="xs:string" />
+            <xs:element name="subcategory" maxOccurs="unbounded" type="SubCategory"/>
         </xs:sequence>
     </xs:complexType>
-    
-    <xs:complexType name="categoriesType">
+    <xs:complexType name="ListCategories">
         <xs:sequence>
-            <xs:element name="category" type="categorytype" maxOccurs="unbounded"/>
+            <xs:element name="Category" type="Category" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    
-    <xs:element name="categories" type="categoriesType"/>
-    <!--    <xs:element name="item" maxOccurs="unbounded">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="title" type="xs:string"/>
-                <xs:element name="note" type="xs:string" minOccurs="0"/>
-                <xs:element name="quantity" type="xs:positiveInteger"/>
-                <xs:element name="price" type="xs:decimal"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>-->
+    <xs:element name="categories" type="ListCategories"/>
 </xs:schema>
